@@ -1,4 +1,4 @@
-﻿using cqrs_template;
+﻿using CqrsTemplate;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

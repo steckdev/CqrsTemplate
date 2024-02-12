@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace cqrs_template;
+namespace CqrsTemplate;
 
 public enum Gender
 {
