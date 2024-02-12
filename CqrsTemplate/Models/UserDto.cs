@@ -22,5 +22,28 @@ public class User
     public DateOnly? DeathDate { get; set; }
     public string? DeathLocation { get; set; }
 
+
+    public string CreatedBy { get; set; }
+    public DateTime CreatedDate { get; set; }
+    public string? LastModifiedBy { get; set; }
+    public DateTime? LastModifiedDate { get; set; }
+
+    public void OnBeforeSave(DbContext context)
+    {
+        if (Id == Guid.Empty)
+        {
+            // update with user context
+            CreatedBy = "Unknown"; 
+            LastModifiedBy = "Unknown";
+            CreatedDate = DateTime.UtcNow;
+            LastModifiedDate = DateTime.UtcNow;
+        }
+        else
+        {
+            // update with user context
+            LastModifiedBy = "Unknown";
+            LastModifiedDate = DateTime.UtcNow;
+        }
+    }
 }
 
