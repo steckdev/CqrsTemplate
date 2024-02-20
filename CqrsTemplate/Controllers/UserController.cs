@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using CqrsTemplate.Entities;
+using CqrsTemplate.Features.Users.Commands;
+using CqrsTemplate.Features.Users.Queries;
+using Mediator;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CqrsTemplate.Controllers
 {
@@ -9,25 +12,30 @@ namespace CqrsTemplate.Controllers
     {
         private readonly UsersContext _context;
         private readonly ILogger<UserController> _logger;
+        private readonly IMediator _mediator;
 
-        public UserController(UsersContext context, ILogger<UserController> logger)
+        public UserController(UsersContext context, ILogger<UserController> logger, IMediator mediator)
         {
             _context = context;
             _logger = logger;
+            _mediator = mediator;
         }
 
         [HttpGet(Name = "GetAllUsers")]
         public async Task<IEnumerable<User>> Get()
         {
             _logger.LogInformation("Getting users");
-            return await _context.Users.ToListAsync();
+            // var users = await _context.Users.ToListAsync();
+            var users = await _mediator.Send(new GetAllUsersQuery());
+            return users;
         }
 
         [HttpGet("{id}", Name = "GetUserById")]
         public async Task<IActionResult> GetById(Guid id)
         {
             _logger.LogInformation("Getting user by id");
-            var user = await _context.Users.FindAsync(id);
+            //var user = await _context.Users.FindAsync(id);
+            var user = _mediator.Send(new GetUserByIdQuery{ Id = id});
             if (user == null)
             {
                 return NotFound();
@@ -39,8 +47,12 @@ namespace CqrsTemplate.Controllers
         public async Task<IActionResult> CreateAsync(User user)
         {
             _logger.LogInformation("Creating user");
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
+            // _context.Users.Add(user);
+            // await _context.SaveChangesAsync();
+            var createdUser = await _mediator.Send(new CreateUserCommand{
+                GivenName = user.GivenName,
+        Surname = user.Surname,
+        CreatedBy = user.CreatedBy});
             return CreatedAtRoute("GetUserById", new { id = user.Id }, user);
         }
 

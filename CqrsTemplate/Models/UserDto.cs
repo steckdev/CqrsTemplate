@@ -32,9 +32,6 @@ public class User
     {
         if (Id == Guid.Empty)
         {
-            // update with user context
-            CreatedBy = "Unknown"; 
-            LastModifiedBy = "Unknown";
             CreatedDate = DateTime.UtcNow;
             LastModifiedDate = DateTime.UtcNow;
         }

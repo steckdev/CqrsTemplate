@@ -3,20 +3,23 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 
-public class UsersContext : DbContext
+namespace CqrsTemplate.Entities
 {
-    public string DbPath { get; }
-    public DbSet<User> Users { get; set; }
-
-    public UsersContext()
+    public class UsersContext : DbContext
     {
-        var folder = Environment.SpecialFolder.LocalApplicationData;
-        var path = Environment.GetFolderPath(folder);
-        DbPath = System.IO.Path.Join(path, "CqrsTemplate.db");
+        public string DbPath { get; }
+        public DbSet<User> Users { get; set; }
+
+        public UsersContext()
+        {
+            var folder = Environment.SpecialFolder.LocalApplicationData;
+            var path = Environment.GetFolderPath(folder);
+            DbPath = System.IO.Path.Join(path, "CqrsTemplate.db");
+        }
+
+        // Configure auditing later
+
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
+            => options.UseSqlite($"Data Source={DbPath}");
     }
-
-    // Configure auditing later
-
-    protected override void OnConfiguring(DbContextOptionsBuilder options)
-        => options.UseSqlite($"Data Source={DbPath}");
 }

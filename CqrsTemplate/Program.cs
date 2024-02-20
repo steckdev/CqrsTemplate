@@ -1,12 +1,15 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+﻿using CqrsTemplate.Entities;
+using CqrsTemplate.Repositories;
 
-// Add services to the container.
+var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<UsersContext>();
+builder.Services.AddTransient<IUserRepository, InMemoryUserRepository>();
+builder.Services.AddMediator();
 
 
 var app = builder.Build();
