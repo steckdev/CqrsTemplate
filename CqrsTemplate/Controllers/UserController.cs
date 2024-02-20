@@ -25,7 +25,6 @@ namespace CqrsTemplate.Controllers
         public async Task<IEnumerable<User>> Get()
         {
             _logger.LogInformation("Getting users");
-            // var users = await _context.Users.ToListAsync();
             var users = await _mediator.Send(new GetAllUsersQuery());
             return users;
         }
@@ -34,26 +33,23 @@ namespace CqrsTemplate.Controllers
         public async Task<IActionResult> GetById(Guid id)
         {
             _logger.LogInformation("Getting user by id");
-            //var user = await _context.Users.FindAsync(id);
             var user = _mediator.Send(new GetUserByIdQuery{ Id = id});
-            if (user == null)
+            if (user.Result == null)
             {
                 return NotFound();
             }
-            return Ok(user);
+            return Ok(user.Result);
         }
 
         [HttpPost(Name = "CreateUser")]
         public async Task<IActionResult> CreateAsync(User user)
         {
             _logger.LogInformation("Creating user");
-            // _context.Users.Add(user);
-            // await _context.SaveChangesAsync();
             var createdUser = await _mediator.Send(new CreateUserCommand{
                 GivenName = user.GivenName,
         Surname = user.Surname,
         CreatedBy = user.CreatedBy});
-            return CreatedAtRoute("GetUserById", new { id = user.Id }, user);
+            return CreatedAtRoute("GetUserById", new { id = user.Id }, createdUser);
         }
 
         [HttpPut(Name = "UpdateUser")]

@@ -7,7 +7,7 @@ namespace CqrsTemplate.Repositories;
 
 public interface IUserRepository
 {
-    User AddUser(CreateUserCommand command);
-    User? GetUserById(GetUserByIdQuery query);
+    User AddUser(User user);
+    User? GetUserById(Guid id);
     IEnumerable<User> GetAllUsers();
 }

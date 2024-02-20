@@ -12,23 +12,16 @@ public class InMemoryUserRepository : IUserRepository
         _users = new List<User>();
     }
 
-    public User AddUser(CreateUserCommand command)
+    public User AddUser(User user)
     {
-        var user = new User
-        {
-            Id = Guid.NewGuid(),
-            GivenName = command.GivenName,
-            Surname = command.Surname,
-            CreatedBy = command.CreatedBy,
-        };
         user.OnBeforeSave(null);
         _users.Add(user);
         return user;
     }
 
-    public User? GetUserById(GetUserByIdQuery query)
+    public User? GetUserById(Guid id)
     {
-        var user = _users.FirstOrDefault(x => x.Id == query.Id);
+        var user = _users.FirstOrDefault(x => x.Id == id);
         return user;
     }
 

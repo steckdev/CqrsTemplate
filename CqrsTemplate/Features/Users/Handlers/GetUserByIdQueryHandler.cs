@@ -16,7 +16,7 @@ public class GetUserByIdQueryHandler : IRequestHandler<GetUserByIdQuery, User?>
 
     public ValueTask<User?> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
     {
-        var user = _userRepository.GetUserById(request);
+        var user = _userRepository.GetUserById(request.Id);
         return ValueTask.FromResult(user);
     }
 }

@@ -23,7 +23,7 @@ public class User
     public string? DeathLocation { get; set; }
 
 
-    public string CreatedBy { get; set; }
+    public required string CreatedBy { get; set; }
     public DateTime CreatedDate { get; set; }
     public string? LastModifiedBy { get; set; }
     public DateTime? LastModifiedDate { get; set; }

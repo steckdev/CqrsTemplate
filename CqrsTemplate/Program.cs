@@ -8,7 +8,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<UsersContext>();
-builder.Services.AddTransient<IUserRepository, InMemoryUserRepository>();
+builder.Services.AddSingleton<IUserRepository, InMemoryUserRepository>();
 builder.Services.AddMediator();
 
 
