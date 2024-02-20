@@ -20,14 +20,26 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="Mediator" Version="1.0.2123" />
+    <PackageReference Include="Mediator.Abstractions" Version="2.1.7" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="Models\" />
     <None Remove="Entities\" />
+    <None Remove="Features\" />
+    <None Remove="Features\Users\" />
+    <None Remove="Features\Users\Commands\" />
+    <None Remove="Features\Users\Queries\" />
+    <None Remove="Features\Users\Handlers\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
     <Folder Include="Entities\" />
+    <Folder Include="Features\" />
+    <Folder Include="Features\Users\" />
+    <Folder Include="Features\Users\Commands\" />
+    <Folder Include="Features\Users\Queries\" />
+    <Folder Include="Features\Users\Handlers\" />
   </ItemGroup>
 </Project>
